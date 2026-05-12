@@ -22,13 +22,20 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
-      # Generamos los íconos usando tu archivo icon.png
+      # Asegurar que existe la carpeta www con tus archivos de GEOVEN
+      - name: Preparar archivos web
+        run: |
+          mkdir -p www
+          cp -r assets www/ || true
+          cp *.html www/ || true
+          cp *.css www/ || true
+          cp *.js www/ || true
+
       - name: Generar íconos para Android
         run: |
           npm install @capacitor/assets
           npx capacitor-assets generate --android
 
-      # ARREGLO PARA ERROR 126: Dar permiso de ejecución y sincronizar
       - name: Sincronizar Capacitor
         run: |
           chmod +x ./node_modules/.bin/cap
