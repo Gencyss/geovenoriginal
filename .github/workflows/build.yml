@@ -16,16 +16,18 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22' # Actualizado para cumplir con los requisitos de Capacitor
+          node-version: '22'
           cache: 'npm'
 
       - name: Instalar dependencias
         run: npm install
 
+      # Instalamos la herramienta y la ejecutamos sin etiquetas
+      # Por defecto, busca "assets/icon.png" para generar todo
       - name: Generar íconos para Android
         run: |
           npm install @capacitor/assets
-          npx capacitor-assets generate --android --icon assets/icon.png
+          npx capacitor-assets generate --android
 
       - name: Sincronizar Capacitor
         run: npx cap sync android
