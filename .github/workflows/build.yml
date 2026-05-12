@@ -16,28 +16,17 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
           cache: 'npm'
 
       - name: Instalar dependencias
         run: npm install
 
-      - name: Instalar @capacitor/assets
-        run: npm install --save-dev @capacitor/assets
-
-      # Instalar ImageMagick para crear un icono simple
-      - name: Instalar ImageMagick
-        run: sudo apt-get update && sudo apt-get install -y imagemagick
-
-      # Crear un icono base (fondo azul con letra "G" blanca)
-      - name: Crear icono temporal
-        run: |
-          mkdir -p resources
-          convert -size 1024x1024 xc:blue -fill white -gravity center -pointsize 200 -annotate 0 "G" resources/icon.png
-
-      # Generar todos los íconos para Android
+      # Usamos el nombre exacto: icon.png
       - name: Generar íconos para Android
-        run: npx capacitor-assets generate --android
+        run: |
+          npm install @capacitor/assets
+          npx capacitor-assets generate --android --iconAssets assets/icon.png
 
       - name: Sincronizar Capacitor
         run: npx cap sync android
@@ -46,13 +35,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '21'
-
-      - name: Configurar Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Aceptar licencias Android
-        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          java-version: '17'
 
       - name: Dar permisos a Gradle
         run: chmod +x android/gradlew
