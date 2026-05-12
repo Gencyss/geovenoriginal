@@ -22,7 +22,6 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
-      # Asegurar que existe la carpeta www con tus archivos de GEOVEN
       - name: Preparar archivos web
         run: |
           mkdir -p www
@@ -45,7 +44,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21' # Cambiado de 17 a 21 para solucionar el error de compilación
 
       - name: Dar permisos a Gradle
         run: chmod +x android/gradlew
