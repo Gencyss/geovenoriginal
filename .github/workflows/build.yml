@@ -28,9 +28,11 @@ jobs:
           npm install @capacitor/assets
           npx capacitor-assets generate --android
 
-      # SOLUCIÓN AL ERROR 127: Usamos la ruta directa al binario de capacitor
+      # ARREGLO PARA ERROR 126: Dar permiso de ejecución y sincronizar
       - name: Sincronizar Capacitor
-        run: ./node_modules/.bin/cap sync android
+        run: |
+          chmod +x ./node_modules/.bin/cap
+          ./node_modules/.bin/cap sync android
 
       - name: Configurar Java
         uses: actions/setup-java@v4
