@@ -22,15 +22,15 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
-      # Instalamos la herramienta y la ejecutamos sin etiquetas
-      # Por defecto, busca "assets/icon.png" para generar todo
+      # Generamos los íconos usando tu archivo icon.png
       - name: Generar íconos para Android
         run: |
           npm install @capacitor/assets
           npx capacitor-assets generate --android
 
+      # SOLUCIÓN AL ERROR 127: Usamos la ruta directa al binario de capacitor
       - name: Sincronizar Capacitor
-        run: npx cap sync android
+        run: ./node_modules/.bin/cap sync android
 
       - name: Configurar Java
         uses: actions/setup-java@v4
