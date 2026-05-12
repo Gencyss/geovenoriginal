@@ -1,0 +1,69 @@
+name: Generar APK Geovengo
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Instalar @capacitor/assets
+        run: npm install --save-dev @capacitor/assets
+
+      # Instalar ImageMagick para crear un icono simple
+      - name: Instalar ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+
+      # Crear un icono base (fondo azul con letra "G" blanca)
+      - name: Crear icono temporal
+        run: |
+          mkdir -p resources
+          convert -size 1024x1024 xc:blue -fill white -gravity center -pointsize 200 -annotate 0 "G" resources/icon.png
+
+      # Generar todos los íconos para Android
+      - name: Generar íconos para Android
+        run: npx capacitor-assets generate --android
+
+      - name: Sincronizar Capacitor
+        run: npx cap sync android
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Aceptar licencias Android
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+
+      - name: Dar permisos a Gradle
+        run: chmod +x android/gradlew
+
+      - name: Construir APK
+        run: |
+          cd android
+          ./gradlew assembleDebug
+
+      - name: Subir APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Geovengo-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
