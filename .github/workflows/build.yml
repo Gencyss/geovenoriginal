@@ -22,29 +22,36 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
+      # Preparamos la carpeta www respetando tu estructura de carpetas
       - name: Preparar archivos web
         run: |
           mkdir -p www
-          cp -r assets www/ || true
+          # Copiamos archivos de la raíz (index, estados.json, etc.)
           cp *.html www/ || true
-          cp *.css www/ || true
+          cp *.json www/ || true
           cp *.js www/ || true
+          cp *.css www/ || true
+          # Copiamos la carpeta assets completa (donde están tus iconos y motores de juego)
+          cp -r assets www/ || true
 
+      # Generamos los íconos usando tu icon.png que está en assets/
       - name: Generar íconos para Android
         run: |
           npm install @capacitor/assets
           npx capacitor-assets generate --android
 
+      # Sincronizamos con los permisos de ejecución correctos
       - name: Sincronizar Capacitor
         run: |
           chmod +x ./node_modules/.bin/cap
           ./node_modules/.bin/cap sync android
 
+      # Usamos Java 21 para que coincida con la configuración de tu proyecto Android
       - name: Configurar Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '21' # Cambiado de 17 a 21 para solucionar el error de compilación
+          java-version: '21'
 
       - name: Dar permisos a Gradle
         run: chmod +x android/gradlew
