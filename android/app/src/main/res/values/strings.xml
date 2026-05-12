@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">geoven</string>
+    <string name="title_activity_main">geoven</string>
+    <string name="package_name">com.geoven.app</string>
+    <string name="custom_url_scheme">com.geoven.app</string>
+</resources>

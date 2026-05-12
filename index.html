@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#FFE902">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>GEOVEN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;700;800;900&family=Bebas+Neue&display=swap"
+          rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+    <!-- LOADING -->
+    <div id="loading" class="screen scr-ld">
+        <div class="ld-ring"></div>
+        <div class="ld-logo"><span class="ca">GEO</span><span class="cb">VEN</span></div>
+    </div>
+
+    <!-- SPLASH -->
+    <div id="splash" class="screen hidden">
+        <div class="sp-bg">
+            <div class="sp-bl b1"></div>
+            <div class="sp-bl b2"></div>
+            <div class="sp-bl b3"></div>
+        </div>
+        <div class="sp-body">
+            <div class="sp-title">
+                <span class="sp-geo">GEO</span>
+                <span class="sp-ven">VEN</span>
+            </div>
+            <!-- Silueta Venezuela: img directa -->
+            <div class="sp-map-wrap">
+                <img class="sp-map-img" src="./assets/estados/venezuela.svg" alt="Venezuela"
+                     onerror="this.src='./assets/estados/venezuela';this.onerror=null">
+            </div>
+            <p class="sp-sub">Domina la geografía de Venezuela</p>
+            <div class="sp-divider">★ &nbsp;✦&nbsp; ★</div>
+            <button id="sp-btn" class="sp-btn">
+                <span>COMENZAR</span><span class="sp-arrow">›</span>
+            </button>
+            <p class="sp-ver">25 Entidades · 3 Modos de Juego</p>
+        </div>
+    </div>
+
+    <!-- MENU -->
+    <div id="menu" class="screen hidden"></div>
+
+    <!-- GAME -->
+    <div id="game-screen" class="screen hidden"></div>
+
+    <!-- ENCYCLOPEDIA -->
+    <div id="enc-panel" class="enc-panel hidden">
+        <div class="enc-hdr">
+            <button class="enc-x" id="enc-close">✕</button>
+            <h2 class="enc-title">📖 Enciclopedia</h2>
+            <input type="text" class="enc-search" id="enc-search" placeholder="🔍 Buscar estado o capital…">
+        </div>
+        <div class="enc-list" id="enc-list"></div>
+    </div>
+
+    <!-- STATE DETAIL -->
+    <div id="state-detail" class="st-detail hidden">
+        <div id="state-detail-inner"></div>
+    </div>
+
+</div>
+<script src="main.js"></script>
+</body>
+</html>
